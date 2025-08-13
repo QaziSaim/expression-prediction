@@ -16,3 +16,40 @@ def load_data(data_url:str)->pd.DataFrame:
     except Exception as e:
         print(f"Error: An unexpected error occurred while loading the data.")
 
+def preprocess_data(df: pd.DataFrame)->pd.DataFrame:
+    try:
+        df.drop(columns='tweet_id',inplace=True)
+        final_df = df[df['sentiment'].isin(['happiness','sadness'])]
+        final_df.replace({'happiness':1,'sadness':0})
+        return final_df
+    except KeyError as E:
+        print(f'Error: Missing column {E} in the dataframe.')
+        print(E)
+        raise
+    except Exception as e:
+        print(f'Error: An unexpected error occured data preprocession.')
+        print(e)
+        raise
+
+def save_data(train_data:pd.DataFrame,test_data:pd.DataFrame,data_path:str)->None:
+    try:
+        data_path = os.path.join(data_path,'raw')
+        os.makedirs(data_path,exist_ok=True)
+        train_data.to_csv(os.path.join(data_path,'train.csv'),index=False)
+        test_data.to_csv(os.path.join(data_path,'test.csv'),index=False)
+
+    except Exception as e:
+        print(f'error: An unexpected error occured while saving the data. ')
+
+def main():
+    try:
+        df = load_data(data_url='https://raw.githubusercontent.com/entbappy/Branching-tutorial/refs/heads/master/tweet_emotions.csv')
+        final_df = preprocess_data(df)
+        train_data,test_data=train_test_split(final_df,test_size=0.2,random_state=42)
+        save_data(train_data,test_data,data_path='E:\MLOPOS\DVC-RUN\data')
+    except Exception as e:
+        print(f'Error {e}')
+        print('Failed to complete the data ingestion process.')
+
+if __name__ == "__main__":
+    main()
