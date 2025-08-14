@@ -15,12 +15,14 @@ def load_data(data_url:str)->pd.DataFrame:
         raise
     except Exception as e:
         print(f"Error: An unexpected error occurred while loading the data.")
+        print(e)
+        raise
 
 def preprocess_data(df: pd.DataFrame)->pd.DataFrame:
     try:
         df.drop(columns='tweet_id',inplace=True)
         final_df = df[df['sentiment'].isin(['happiness','sadness'])]
-        final_df.replace({'happiness':1,'sadness':0})
+        final_df['sentiment'].replace({'happiness':1,'sadness':0},inplace=True)
         return final_df
     except KeyError as E:
         print(f'Error: Missing column {E} in the dataframe.')
