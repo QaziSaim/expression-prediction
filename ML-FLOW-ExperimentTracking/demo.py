@@ -14,8 +14,8 @@ import mlflow.sklearn
 import dagshub
 import logging
 import dagshub
+dagshub.init(repo_owner='QaziSaim', repo_name='AI-POWERED', mlflow=True)
 
-dagshub.init(repo_owner='bappymalik4161', repo_name='mlflow-test', mlflow=True)
 
 logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
         
         # For remote server only (Dagshub)
-        remote_server_uri = "https://dagshub.com/bappymalik4161/mlflow-test.mlflow"
+        remote_server_uri = "https://dagshub.com/QaziSaim/AI-POWERED.mlflow"
         mlflow.set_tracking_uri(remote_server_uri)
 
 
@@ -97,3 +97,4 @@ if __name__ == "__main__":
                 lr, "model", registered_model_name="ElasticnetWineModel")
         else:
             mlflow.sklearn.log_model(lr, "model")
+

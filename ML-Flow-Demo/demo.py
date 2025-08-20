@@ -18,12 +18,12 @@ import dagshub
 import logging
 
 
-dagshub.init(repo_owner = 'sahimkazi',repo_name='mlflow-test',mlflow=True)
+dagshub.init(repo_owner = 'QaziSaim',repo_name='AI-POWERED',mlflow=True)
 
 logging.basicConfig(level = logging.WARN)
 logger = logging.getLogger(__name__)
 
-def eval_metrics(actual,predicted):
+def eval_metrics(actual,predict):
     rmse = np.sqrt(mean_squared_error(actual,predict))
     mae = mean_absolute_error(actual,predict)
     r2 = r2_score(actual,predict)
@@ -66,7 +66,7 @@ if __name__ == "__main__":
         mlflow.log_param('r2',r2)
         
         # For remote server only (Dagshub)
-        remote_server_uri = "https://dagshub.com/bappymalik4161/mlflow-test.mlflow"
+        remote_server_uri = "https://dagshub.com/QaziSaim/AI-POWERED.mlflow"
         mlflow.set_tracking_uri(remote_server_uri)
 
 
